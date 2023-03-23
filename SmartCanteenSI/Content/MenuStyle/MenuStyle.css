@@ -1,0 +1,45 @@
+﻿body {
+}
+.row {
+    display: flex;
+    padding-top: 15px;
+
+}
+
+.show-read-more .more-text {
+    display: none;
+}
+.panel {
+    margin-bottom:0 !important;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+    .panel span{
+        font-size:25px ;
+        font-weight:300 ;
+    }
+.panel-heading {
+    text-align: center;
+    background-color: #f7d85f !important;
+}
+.panel-body {
+    text-align: center;
+    background: #dfa079;
+}
+.panel-footer {
+    display: flex;
+    justify-content: center;
+    background-color: #f7d85f !important;
+}
+.panel-body img {
+    width: 220px;
+    height: 200px;
+    border-radius: 5%;
+    transition: 0.5s;
+}
+.panel-body .dish-info{
+    padding-bottom:10px;
+}
+.panel-body:hover img {
+    transform: scale(1.1);
+}
+

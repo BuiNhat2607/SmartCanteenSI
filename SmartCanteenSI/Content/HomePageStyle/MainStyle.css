@@ -1,0 +1,238 @@
+﻿body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+.sticky-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+.header-1 {
+    background: #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 7%;
+    box-shadow: -4px 2px 4px 1px #552424;
+}
+
+    .header-1 .logo img {
+        width: 60px;
+        height: 60px;
+        border-radius:50%;
+    }
+
+        .header-1 .logo img:hover {
+
+        }
+.container {
+    position: relative;
+    z-index: 0;
+    max-width: 100% !important;
+    padding-top: 50px;
+}
+.navbar-url {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 70px;
+}
+    .navbar-url a {
+        margin: 0 2.5rem;
+        font-size: 1.9rem;
+        font-family:Bahnschrift;
+        color: wheat;
+        text-decoration: none !important;
+        cursor: pointer;
+        filter: grayscale(100%);
+    }
+
+        .navbar-url a:hover {
+            filter: grayscale(0);
+            color: brown;
+        }
+    .navbar-user a {
+        font-size: 1.9rem;
+        font-family: Bahnschrift;
+        color: wheat;
+        text-decoration: none !important;
+        cursor: pointer;
+        filter: grayscale(100%);
+    }
+
+        .navbar-user a:hover {
+            filter: grayscale(0);
+            color: brown;
+        }
+.navbar-cart {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 2.6rem;
+    margin-left:10rem;
+    transition: transform 0.6s;
+    color: wheat;
+}
+    .navbar-cart:hover {
+        color: brown;
+    }
+.navbar-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    text-align: right;
+}
+nav {
+    font-size: 1.9rem;
+    margin-right: 2rem;
+    position:absolute !important;
+}
+
+
+.user-pic {
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 40px;
+    transition:0.5s;
+}
+    .user-pic:hover{
+        transform:scale(1.2);
+    }
+.sub-menu-wrap {
+    position: absolute !important;
+    
+    z-index: 1;
+    top: 100%;
+    left: -175px;
+    width: 320px;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+    .sub-menu-wrap.open-menu {
+        max-height: 400px;
+    }
+.sub-menu {
+    border-radius: 2%;
+    background: wheat;
+    padding: 20px;
+    margin: 5px;
+}
+    .sub-menu hr {
+        color: red;
+        border: 0;
+        height: 3px !important;
+        width: 100%;
+        background: #851e1e;
+        margin: 15px 0 10px;
+    }
+    .sub-menu h2{
+        font-weight:600;
+    }
+.sub-menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+    
+}
+    .sub-menu-link img {
+        width: 40px;
+        background: #e5e5e5;
+        border-radius: 50%;
+        padding: 8px;
+        margin-right: 15px;
+    }
+
+    .sub-menu-link span {
+        width: 100%;
+        font-size: 18px;
+        transition: transform 0.5s;
+    }
+
+        .sub-menu-link:hover span {
+            font-weight: 600;
+            text-decoration: none;
+            transform: translateX(5px);
+            
+        }
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+    .user-info h3{
+        font-weight:500;
+    }
+    .user-info img{
+        width:100px;
+        border-radius:50%;
+        margin-right:15px;
+    }
+.mySlides3 {
+    display: none;
+    width: 100%;
+    padding-top: 5%;
+}
+
+.button-left {
+    left: 1%;
+    font-size: 20px
+}
+
+    .button-right {
+        right: 1%;
+        font-size: 20px
+    }
+
+    .image-button {
+        border: none;
+        display: inline-block;
+        padding: 10px;
+        height: 50px;
+        vertical-align: middle;
+        overflow: hidden;
+        color: #fff;
+        background: #000;
+        position: absolute;
+        top: calc(50% - 25px);
+        opacity: 0.5;
+    }
+
+        .image-button:hover {
+            color: #000;
+            background: #ccc;
+        }
+
+.badge {
+        text-align: center;
+        margin-bottom: 16px;
+        font-size: 20px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .badge-white {
+        color: #000 !important;
+        background-color: #fff !important
+    }
+
+    .image-badge {
+        display: inline-block;
+        border-radius: 50%;
+        height: 14px;
+        width: 14px;
+        border: 1px solid #ccc;
+    }
+
+        .image-badge:hover {
+            background: #fff;
+        }
+
+
+            

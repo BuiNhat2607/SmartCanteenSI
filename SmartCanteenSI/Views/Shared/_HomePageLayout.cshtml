@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/HomePageStyle/MainStyle.css" rel="stylesheet" />
+    <link href="~/Content/FooterStyle/footer.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.6.3.min.js"></script>
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+
+<body>
+    @* ----------------------------------------------------------------------------------------------------------------------------*@
+    <div class="sticky-top">
+        <div class="header-1">
+            <a class="logo" href="@Url.Action("Index", "HomePage")">
+                <img src="~/images/HomePage/b3a4c58af11fd982867403e74fb9885b--knifes-forks.jpg" />
+            </a>
+
+            <div class="navbar-url">
+                <a>@Html.ActionLink("Trang Chủ", "Index", "HomePage")</a>
+                <a>@Html.ActionLink("Giới thiệu", "About", "Home")</a>
+                <a>@Html.ActionLink("Món Ăn", "FoodMenu", "Menu")</a>
+            </div>
+            <div class="navbar-cart">
+                @Html.Partial("~/Views/Cart/CartPartial.cshtml")
+
+            </div>
+            @if (Session["Account"] != null)
+            {
+                <div class="navbar-user">
+                    <nav>
+                        <img class="user-pic" src="@Session["Image"]" width="48" height="48" onclick="toggleMenu()" />
+                        <div class="sub-menu-wrap" id="subMenu">
+                            <div class="sub-menu">
+                                <div class="user-info">
+                                    <img src="@Session["Image"]" width="100" height="100" />
+                                    <h2>@Session["UserName"]</h2>
+                                </div>
+                                <hr>
+                                @if (Session["Role"].ToString() == "Admin")
+                                {
+                                    <div id="manage" class="sub-menu-link" style="cursor: pointer;" onclick="Manage()">
+                                        <img src="~/images/UserProfile/setting.png" />
+                                        <span style="text-align:left;">Quản lý SmartCanteen</span>
+                                    </div>
+                                }
+                                <div class="sub-menu-link" style="cursor: pointer;" onclick="EditProfile()">
+                                    <img src="~/images/UserProfile/profile.png" />
+                                    <span style="text-align:left;">Cập nhật thông tin</span>
+                                </div>
+                                <div class="sub-menu-link" style="cursor: pointer;" onclick="LogOut()">
+                                    <img src="~/images/UserProfile/logout.png" />
+                                    <span style="text-align:left;">Đăng xuất</span>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-user">
+                    <nav>
+                        <a>@Html.ActionLink("Đăng nhập", "LoginPage", "Login")</a>
+                    </nav>
+                </div>
+            }
+            </div>
+        </div>
+
+    @* ----------------------------------------------------------------------------------------------------------------------------*@
+
+<div class="container" style="height: 100vh;">
+    @RenderBody()
+    <hr>
+    <footer>
+        <div class="boxfooter1">
+            <h4>FOLLOW US</h4>
+            <div class="logo-footer">
+                <img src="~/images/icon/facebook.jpg" />
+                <img src="~/images/icon/insta.jpg" />
+            </div>
+        </div>
+        <div class="boxfooter2">
+            <h4>ABOUT US</h4>
+            <div class="add2">Bui Minh Nhat - 2011060734</div>
+            <div class="add2">Huynh Phuoc Dat - 2011062086</div>
+            <div class="add2">Vo Phan Truong Nguyen - 2011061720</div>
+        </div>
+        <div class="boxfooter3">
+            <h4>CONTACT US</h4>
+            <div class="add">Phone Number 1: 0901234565</div>
+            <div class="add">Phone Number 2: 0988778567</div>
+        </div>
+    </footer>
+
+</div>
+
+
+        <script>
+        var subMenu = document.getElementById("subMenu");
+        function toggleMenu() {
+            subMenu.classList.toggle("open-menu");
+        }
+        function LogOut() {
+            if (confirm("Bạn có chắc muốn đăng xuất!") == true) {
+                alert("Đã đăng xuất!")
+                window.location.href = "/HomePage/Logout";
+            } else {
+                return false;
+            }
+        }
+        function EditProfile() {
+            window.location.href = "/User/EditProfile";
+        }
+        </script>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        @RenderSection("upload", required: false)
+</body>
+
+</html>

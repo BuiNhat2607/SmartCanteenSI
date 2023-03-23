@@ -1,0 +1,75 @@
+﻿@model IEnumerable<SmartCanteenSI.Models.Data.Cart>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    
+}
+<script src="~/Scripts/jquery-3.6.3.min.js"></script>
+
+<h2>GioHang</h2>
+
+    <table class="table" id="Test">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.tenMon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.giaBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.soLuong)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.thanhTien)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenMon)
+                </td>
+                <td>
+                    <img src="@item.hinh" width="180" alt="Alternate Text" />
+                </td>
+                @using (Html.BeginForm("UpdateCart", "Cart", new { @id = item.dishID }))
+                {
+                    <td> @string.Format("{0:0,0}", item.giaBan) VND </td>
+                    <td>
+                        <input id="soluong" type="number" min="1" name="txtSolg" value="@item.soLuong" />
+                        @ViewBag.Error
+                    </td>
+                    <td> @Html.DisplayFor(modelItem => item.thanhTien) </td>
+                    <td>
+                        <a href="@Url.Action("Detail", "Sach", new { id = item.dishID })">
+                            Chi tiết
+                        </a> | @Html.ActionLink("Xoá", "XoaGiohang", new { @id = item.dishID })
+                    </td>
+                    <td>
+                        <input type="submit" value="Cập nhật" class="btn btn-success" />
+                    </td>
+
+                }
+            </tr>
+
+        }
+        <tr style="font-weight:bold; text-align:left; color:red">
+            <td colspan="2"> Số loại sách: @ViewBag.TongSoLuongSanPham </td>
+            <td colspan="2"> Số lượng sách: @ViewBag.TongSoLuong </td>
+            <td colspan="4"> Tổng tiền: @String.Format("{0:0,0}", @ViewBag.TongTien) VND</td>
+        </tr>
+        <tr style="font-weight:bold; color:yellow; text-align:right ">
+            <td colspan="5">
+                <a href="@Url.Action("Order", "Cart")">Đặt hàng</a>
+            </td>
+        </tr>
+    </table>
+
+

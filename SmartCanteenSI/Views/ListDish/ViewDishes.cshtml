@@ -1,0 +1,64 @@
+﻿@model IEnumerable<SmartCanteenSI.Models.Data.Dish>
+
+@{
+    ViewBag.Title = "ViewDishes";
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+}
+
+<h2>ViewDishes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DishName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InStock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DishName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InStock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            <img src="@Html.DisplayFor(modelItem => item.Image)" alt="thumbnail" width="150" height="150" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DishID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DishID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DishID })
+        </td>
+    </tr>
+}
+
+</table>

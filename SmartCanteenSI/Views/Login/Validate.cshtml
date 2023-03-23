@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.6.3.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+<div class="alert alert-warning" id="previous">
+    <strong>Xác thực tài khoản</strong>
+    <input type="submit" class="btn btn-warning" value="Confirm" onclick="XacThuc()" />
+</div>
+<div class="alert alert-success" id="after" style="display:none">
+    <strong><span class="glyphicon glyphicon-ok"></span>Tài khoản của bạn đã được xác thực</strong>
+</div>
+<script>
+    function XacThuc() {
+        $.ajax({
+            type:"post",
+            url:"/Login/RegisterValidate",
+            data: { 'regId':'@ViewBag.regID' },
+            success: function (msg) {
+                $("#previous").hide();
+                $("#after").show();
+                alert(msg);
+            }
+        })
+    };
+</script>
+

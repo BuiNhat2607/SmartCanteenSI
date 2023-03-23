@@ -1,0 +1,620 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="~/Scripts/jquery-3.6.3.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/LoginStyle.css" rel="stylesheet" />
+<link href="~/Content/ShowHideStyle.css" rel="stylesheet" />
+<link href="~/Content/LoginStyle/CheckResetPass.css" rel="stylesheet" />
+
+<body>
+    <div class="containner" style="margin-top: 10%; text-align: center;">
+        <div class="row" style="display:flex;justify-content:center">
+            <div class="col-md-4 col-md-4 alert alert-info">
+                <h3 class="text-center">Login</h3>
+                <form id="loginForm">
+                    <div id="msg"><ul style="color:red;">Tên đăng nhập hoặc mật khẩu không đúng!</ul></div>
+                    <div id="noneAuthencation"><ul style="color:red;">Email chưa xác thực vui lòng xác thực email!</ul></div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input class="form-control" type="email" name="Email" id="logEmail" placeholder="Email" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input class="form-control" type="password" name="PassWord" id="logPassWord" placeholder="PassWord" />
+                            <i class="input-group-addon" id="showPass" onmouseover="ShowPass()" onmouseout="HidePass()"></i>
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group">
+                    <button class="btn btn-info form-control" type="submit" onclick="Login()"><i class="glyphicon glyphicon-log-in"></i>Đăng nhập</button>
+                </div>
+                <div class="form-control">
+                    <a style="float:left" onclick="ForgotPassWord()">Quên mật khẩu?</a><a style="float:right;cursor:pointer" onclick="SignUp()">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ShowModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Form đăng ký</h4>
+                    <div id="message1">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>
+                                Bạn đã đăng ký thành công!<br />
+                                Một email đã được gửi đến hộp thư của bạn để xác thực!<br />
+                                Vui lòng kiểm tra hộp thư của bạn
+                            </strong>
+                        </div>
+                    </div>
+
+
+                    <div id="message2">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Đăng ký thất bại! Vui lòng kiểm tra thông tin</strong>
+                        </div>
+                    </div>
+
+                    <div id="message3">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Tài khoản đã tồn tại vui lòng sử dụng chức năng đăng nhập!</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form id="Registration">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                <input class="form-control" type="text" name="FullName" id="name" placeholder="Tên nhân viên" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"> <img src="~/images/icon/gender.png" width="16" height="16" /> </span>
+                                <div class="col-md-3">
+                                    <input type="radio" id="male" name="Gender" value="Nam">
+                                    <label for="male"> Nam</label><br>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" id="female" name="Gender" value="Nữ">
+                                    <label for="female">Nữ</label><br>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="radio" id="other" name="Gender" value="Khác">
+                                    <label for="other">Khác</label><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input class="form-control" type="date" name="BirthDay" id="birthday" placeholder="Ngày sinh" />
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                <input class="form-control" type="text" name="PhoneNumber" id="phonenumber" placeholder="Số điện thoại" />
+                            </div>
+                        </div>
+                        <div id="phoneFormat">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>Số điện thoại phải là 10 số!!</strong>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input class="form-control" type="text" name="UserName" id="user" placeholder="Tên đăng nhập" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input class="form-control" type="email" name="Email" id="Email" placeholder="Email" />
+                            </div>
+                        </div>
+                        <div id="mailFormat">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>Bạn đã nhập sai định dạng mail!!</strong>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input class="form-control" type="password" name="PassWord" id="passWord" placeholder="Mật khẩu" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mật khẩu phải chứa ít nhất 1 ký tự hoa,1 ký tự thường,1 số và 1 ký tự đặc biệt và ít nhất 8 ký tự!!" required />
+                                <i class="input-group-addon" id="showPass" onmouseover="ShowPass()" onmouseout="HidePass()"></i>
+                            </div>
+                        </div>
+                        <div id="passWordFormat">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu phải chứa ít nhất 1 chữ thường,1 chữa hoa, 1 số, 1 ký tự đặc biệt và dài tối thiểu 8 ký tự</strong>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="PassWordMessage">
+                                <h4>Mật khẩu phải thoả các điều kiện sau:</h4>
+                                <p id="letter" class="invalid">Chữ <b>thường</b></p>
+                                <p id="capital" class="invalid">Chữ <b>IN HOA</b></p>
+                                <p id="number" class="invalid">Ký tự <b>số</b>(0-9)</p>
+                                <p id="length" class="invalid">Ít nhất <b>8 ký tự</b></p>
+                                <p id="special" class="invalid">Ít nhất 1 <b> ký tự đặc biệt</b></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input class="form-control" type="password" id="reenterpassword" placeholder="Nhập lại Mật khẩu" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Mật khẩu phải chứa ít nhất 1 ký tự hoa,1 ký tự thường,1 số và 1 ký tự đặc biệt và ít nhất 8 ký tự!!" required />
+                            </div>
+                        </div>
+                        <div id="passWordMismatched">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu không khớp!!!</strong>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div class="form-group">
+                        <button class="btn btn-info form-control" type="submit" onclick="SaveForm()"><i class="glyphicon glyphicon-registration-mark"></i>Đăng ký</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ForgotPassword">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h4>Quên mật khẩu</h4>
+                    <div id="OTPSended">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>
+                                <br />
+                                Mã xác thực đã được gửi đến mail của bạn<br />
+                                Vui lòng kiểm tra hộp thư của bạn!
+                            </strong>
+                        </div>
+                    </div>
+
+                    <div id="infoSuccess">
+                        <div class="alert alert-success">
+                            <span class="glyphicon glyphicon-ok"></span><strong>Cập nhật mật khẩu thành công!</strong>
+                        </div>
+                    </div>
+
+                    <div id="mismatchedPass">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Mật khẩu không trùng nhau!</strong>
+                        </div>
+                    </div>
+
+                    <div id="lackOfInfo">
+                        <div class="alert alert-danger">
+                            <span class="glyphicon glyphicon-remove"></span><strong>Vui lòng điền đầy đủ thông tin!</strong>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="display:flex;justify-content:center;">
+                        <button class="btn btn-info " type="submit" onclick="GuiOTP()"><i class="glyphicon glyphicon-envelope"></i>Gửi OTP</button>
+                    </div>
+                    <form id="ResetPass">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input class="form-control" type="text" name="OTP" id="OTP" placeholder="OTP" />
+                            </div>
+                        </div>
+
+                        <div id="wrongOTP">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>OTP không chính xác!</strong>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                <input class="form-control" type="email" name="Email" id="ResetEmail" placeholder="Email" />
+                            </div>
+                        </div>
+                        <div id="notFound">
+                            <div class="alert alert-danger">
+                                <span class="glyphicon glyphicon-remove"></span><strong>Email không tồn tại hoặc chưa kích hoạt!</strong>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input class="form-control" type="password" name="PassWord" id="NewPassWord" placeholder="Mật khẩu" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div id="ResetPassMessage">
+                                <h4>Mật khẩu phải thoả các điều kiện sau:</h4>
+                                <p id="letter1" class="invalid">Chữ <b>thường</b></p>
+                                <p id="capital1" class="invalid">Chữ <b>IN HOA</b></p>
+                                <p id="number1" class="invalid">Ký tự <b>số</b>(0-9)</p>
+                                <p id="length1" class="invalid">Ít nhất <b>8 ký tự</b></p>
+                                <p id="special1" class="invalid">Ít nhất 1 <b> ký tự đặc biệt</b></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input class="form-control" type="password" name="ReenterPass" id="ReenterPass" placeholder="Nhập lại mật khẩu" />
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="form-group">
+                        <button class="btn btn-info form-control" type="submit" onclick="ResetPass()"><i class="glyphicon glyphicon-registration-mark"></i>Reset mật khẩu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="~/MyJS/Login/ShowHidePass.js" defer></script>
+<script src="~/MyJS/Login/Login.js" defer></script>
+<script src="~/MyJS/Login/Register.js" defer></script>
+<script src="~/MyJS/Login/CheckPass.js" defer></script>
+<script src="~/MyJS/Login/CheckResetPass.js" defer></script>
+<script src="~/MyJS/Login/ResetPass.js" defer></script>
+<script src="~/MyJS/Login/SendOTP.js" defer></script>
+    @*<script>
+            $("#msg").hide();
+            $("#noneAuthencation").hide();
+            function SignUp() {
+                $("#ShowModal").modal();
+                var messageArray = [
+                    $("#message1"),
+                    $("#message2"),
+                    $("#message3"),
+                    $("#passWordFormat"),
+                    $("#mailFormat"),
+                    $("#phoneFormat"),
+                    $("#passWordMismatched"),
+                ];
+                messageArray.every(hidden);
+                function hidden(h) {
+                    return h.hide();
+                }
+            }
+            function SaveForm() {
+                var name = $("#user").val();
+                var pass = $("#passWord").val();
+                var email = $("#Email").val();
+                var phoneNumber = $("#phonenumber").val();
+                var reenterPass = $("#reenterpassword").val();
+                if (name == "" || pass == "" || email == "") {
+
+                    $("#message2").show();
+                    setTimeout(() => {
+                        $("#message2").hide();
+                    }, 5000);
+                    return false;
+                }
+                if (pass != reenterPass) {
+                    $("#passWordMismatched").show();
+                    setTimeout(() => {
+                        $("#passWordMismatched").hide();
+                    }, 5000);
+                    return false;
+                }
+
+                var passFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,30}$/;
+                var mailFormat = /^\w+([\.-]?\w+)@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                var phoneFormat = /^\d{10}$/;
+                if (!pass.match(passFormat)) {
+                    alert("Wrong Pass Format!");
+                    $("#passWordFormat").show();
+                    setTimeout(() => {
+                        $("#passWordFormat").hide();
+                    }, 5000);
+                    return false;
+                }
+                if (!email.match(mailFormat)) {
+
+                    alert("Wrong Mail Format!");
+
+                    $("#mailFormat").show();
+                    setTimeout(() => {
+                        $("#mailFormat").hide();
+                    }, 5000);
+                    return false;
+                }
+                if (!phoneNumber.match(phoneFormat)) {
+                    alert("Wrong Phone Format!");
+                    $("#phoneFormat").show();
+                    setTimeout(() => {
+                        $("#phoneFormat").hide();
+                    }, 5000);
+                    return false;
+                }
+
+                var data = $("#Registration").serialize();
+                $.ajax({
+                    type: "post",
+                    data: data,
+                    url: "/Login/Register",
+                    success: function (result) {
+                        if (result == "Exist") {
+                            $("#message3").show();
+                            setTimeout(() => {
+                                $("#message3").hide();
+                            }, 5000);
+                            $("#Registration")[0].reset();
+                        }
+                        else if (result == "notAdmin") {
+                            $("#message2").show();
+                            setTimeout(() => {
+                                $("#message2").hide();
+                            }, 5000);
+                            $("#Registration")[0].reset();
+                        }
+                        else {
+                            $("#message1").show();
+                            setTimeout(() => {
+                                $("#message1").hide();
+                            }, 5000);
+                            $("#Registration")[0].reset();
+                        }
+
+                    }
+                });
+            }
+        </script>*@
+    @*Check PassWord*@
+    @*<script>
+            var passInput = document.getElementById("passWord");
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var length = document.getElementById("length");
+            var special = document.getElementById("special");
+
+            // When the user clicks on the password field, show the message box
+
+            passInput.onfocus = function () {
+                document.getElementById("PassWordMessage").style.display = "block";
+            }
+
+
+            // When the user clicks outside of the password field, hide the message box
+            passInput.onblur = function () {
+                document.getElementById("PassWordMessage").style.display = "none";
+            }
+
+
+            // When the user starts to type something inside the password field
+            passInput.onkeyup = function () {
+                // Validate lowercase letters
+                var lowerCaseLetters = /[a-z]/g;
+                if (passInput.value.match(lowerCaseLetters)) {
+                    letter.classList.remove("invalid");
+                    letter.classList.add("valid");
+                } else {
+                    letter.classList.remove("valid");
+                    letter.classList.add("invalid");
+                }
+
+                // Validate capital letters
+                var upperCaseLetters = /[A-Z]/g;
+                if (passInput.value.match(upperCaseLetters)) {
+                    capital.classList.remove("invalid");
+                    capital.classList.add("valid");
+                } else {
+                    capital.classList.remove("valid");
+                    capital.classList.add("invalid");
+                }
+
+                // Validate numbers
+                var numbers = /[0-9]/g;
+                if (passInput.value.match(numbers)) {
+                    number.classList.remove("invalid");
+                    number.classList.add("valid");
+                } else {
+                    number.classList.remove("valid");
+                    number.classList.add("invalid");
+                }
+
+                // Validate length
+                if (passInput.value.length >= 8) {
+                    length.classList.remove("invalid");
+                    length.classList.add("valid");
+                } else {
+                    length.classList.remove("valid");
+                    length.classList.add("invalid");
+                }
+                var specialCharacter = /[!@@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+                if (passInput.value.match(specialCharacter)) {
+                    special.classList.remove("invalid");
+                    special.classList.add("valid");
+                } else {
+                    special.classList.remove("valid");
+                    special.classList.add("invalid");
+                }
+            }
+
+        </script>*@
+
+    @*<script>
+            $("#msg").hide();
+            $("#noneAuthencation").hide();
+            var Login = function () {
+                var data = $("#loginForm").serialize();
+                $.ajax({
+                    type: "post",
+                    url: "/Login/CheckAccount",
+                    data: data,
+                    success: function (result) {
+                        if (result == "Fail") {
+                            $("#loginForm")[0].reset();
+                            $("#msg").show();
+                            setTimeout(() => {
+                                $("#msg").hide();
+                            }, 5000);
+                        }
+                        else if (result == "notValid") {
+                            $("#loginForm")[0].reset();
+                            $("#noneAuthencation").show();
+                            setTimeout(() => {
+                                $("#noneAuthencation").hide();
+                            }, 5000);
+                        }
+                        else {
+                            window.location.href = "/HomePage/Index";
+                            $("#msg").hide();
+                            $("#noneAuthencation").hide();
+                        }
+                    }
+                })
+            }
+        </script>*@
+    @* Show hide password *@
+    @*<script>
+            var regPass = document.getElementById("passWord")
+            var regPass2 = document.getElementById("reenterpassword");
+            var logPass = document.getElementById("logPassWord");
+            function ShowPass() {
+                regPass.type = "text";
+                regPass2.type = "text";
+                logPass.type = "text";
+            }
+            function HidePass() {
+                regPass.type = "password";
+                regPass2.type = "password";
+                logPass.type = "password";
+            }
+        </script>*@
+    @*<script>
+            function ForgotPassWord() {
+                $("#ForgotPassword").modal();
+                var forgotPassMessage = [
+                    $("#OTPSended"),
+                    $("#infoSuccess"),
+                    $("#mismatchedPass"),
+                    $("#lackOfInfo"),
+                    $("#wrongOTP"),
+                    $("#notFound")
+                ];
+                forgotPassMessage.every(hidden);
+                function hidden(h) {
+                    return h.hide();
+                }
+            }
+
+            var ResetPass = function () {
+
+                var OTP = $("#OTP").val();
+                var mail = $("#ResetEmail").val();
+                var pass = $("#NewPassWord").val();
+                var reenterpass = $("#ReenterPass").val();
+                if (OTP == "" || mail == "" || pass == "" || reenterpass == "") {
+                    $("#lackOfInfo").show();
+                    setTimeout(() => {
+                        $("#lackOfInfo").hide();
+                    }, 5000);
+                    return false;
+                }
+                if (pass != reenterpass) {
+                    $("#mismatchedPass").show();
+                    setTimeout(() => {
+                        $("#mismatchedPass").hide();
+                    }, 5000);
+                    return false;
+                }
+                var passFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,30}$/;
+                if (!pass.match(passFormat)) {
+                    alert("Wrong Pass Format!");
+                    $("#passWordFormat").show();
+                    setTimeout(() => {
+                        $("#passWordFormat").hide();
+                    }, 5000);
+                    return false;
+                }
+                var data = $("#ResetPass").serialize();
+                $.ajax({
+                    type: "post",
+                    url: "/Login/ResetPass",
+                    data: data,
+                    success: function (kq) {
+                        if (kq == "NotValid") {
+                            $("#ResetPass")[0].reset();
+                            $("#notFound").show();
+                            setTimeout(() => {
+                                $("#notFound").hide();
+                            }, 5000);
+                            return false;
+                        }
+                        if (kq == "WrongOTP") {
+                            $("#wrongOTP").show();
+                            setTimeout(() => {
+                                $("#wrongOTP").hide();
+                            }, 5000);
+                            return false;
+                        }
+                        else {
+                            $("#ResetPass")[0].reset();
+                            $("#infoSuccess").show();
+                            setTimeout(() => {
+                                $("#infoSuccess").hide();
+                            }, 5000);
+                        }
+                    }
+                })
+            }
+
+        </script>*@
+    @*<script>
+            var GuiOTP = function () {
+                var data = $("#ResetPass").serialize();
+                $.ajax({
+                    type: "post",
+                    data: data,
+                    url: "/Login/SendOTP",
+                    success: function (Valid) {
+                        if (Valid == false) {
+                            $("#notFound").show();
+                            setTimeout(() => {
+                                $("#notFound").hide();
+                            }, 5000);
+                        }
+                        else {
+                            $("#OTPSended").show();
+                            setTimeout(() => {
+                                $("#OTPSended").hide();
+                            }, 5000);
+                        }
+                    }
+                });
+            }
+        </script>*@

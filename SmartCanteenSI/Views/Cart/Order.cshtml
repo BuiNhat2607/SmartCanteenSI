@@ -1,0 +1,146 @@
+﻿@model IEnumerable<SmartCanteenSI.Models.Data.Cart>
+@using SmartCanteenSI.Models.Data
+@{
+
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    List<CartOFS> listHetHang = (List<CartOFS>)Session["DS"];
+    User kh = (User)Session["Account"];
+}
+
+@if (listHetHang != null)
+{
+    <h1>Bạn không thể đặt hàng vì những món sau đây không đủ suất phục vụ trong ngày hôm nay</h1>
+    <h2>Vui lòng bỏ chọn hoặc giảm số lượng những món này</h2>
+    <table class="table" id="Table2">
+        <tr>
+            <th>
+                <label>Tên món</label>
+            </th>
+            <th>
+                <label>Hình</label>
+            </th>
+            <th>
+                <label>Số lượng đã chọn</label>
+            </th>
+            <th>
+                <label>Số suất ăn còn lại trong hôm nay</label>
+
+            </th>
+        </tr>
+        @foreach (var l in listHetHang)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => l.tenMon)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => l.hinh)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => l.soLuongChon)
+                </th>
+                <th>
+                    @Html.DisplayFor(modelItem => l.soLuongTon)
+                </th>
+            </tr>
+        }
+    </table>
+    @Html.ActionLink("Quay về giỏ hàng", "Cart", "Cart")
+}
+else if (listHetHang == null)
+{
+    <h2>Đơn hàng</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.dishID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tenMon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.giaBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.soLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.thanhTien)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> @Html.DisplayFor(modelItem => item.dishID)</td>
+
+                <td> @Html.DisplayFor(modelItem => item.tenMon)</td>
+
+                <td> <img src="@item.hinh" width="200" /></td>
+
+                @using (Html.BeginForm("UpdateCart", "Cart", new { @id = item.dishID }))
+                {
+                    <td>@String.Format("{0:0,0}", item.giaBan) VNĐ</td>
+                    <td> @Html.DisplayFor(modelItem => item.soLuong)</td>
+                    <td> @Html.DisplayFor(modelItem => item.thanhTien)</td>
+                }
+            </tr>
+
+        }
+        <tr style="font-weight:bold; text-align:right; color:red">
+            <td colspan="3">Số lượng món: @ViewBag.TongSoLuong</td>
+            <td colspal="4">Số món: @ViewBag.TongSoLuongSanPham</td>
+            <td colspan="5">Tổng tiền:@String.Format("{0:0,0}", @ViewBag.TongTien)VNĐ</td>
+        </tr>
+        <tr style="font-weight:bold; text-align:right">
+            <td colspan="6"></td>
+            <td colspan="7">@Html.ActionLink("Trở về giỏ hàng", "Cart", "Cart")</td>
+        </tr>
+
+    </table>
+    <h2 style="text-align: center">Thông tin đặt hàng</h2>
+    <table align="center">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <tr style="height:40px">
+                <td>Họ tên khách hàng: </td>
+                <td style="font-weight:bold">@kh.FullName</td>
+            </tr>
+            <tr style="height:40px">
+                <td>Email: </td>
+                <td style="font-weight:bold">@kh.Email</td>
+            </tr>
+            <tr style="height:40px">
+                <td>Địa chỉ: </td>
+                <td style="font-weight:bold">@kh.PhoneNumber</td>
+            </tr>
+            <tr style="height:40px">
+                <td>Ngày đặt: </td>
+                <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
+            </tr>
+            @*<tr style="height:40px">
+                    <td>Ngày đặt: </td>
+                    <td style="font-weight:bold">
+                        <input type="Date" name="NgayGiao" />
+                    </td>
+                </tr>*@
+            <tr style="height:40px">
+                <td></td>
+                <td style="font-weight:bold">
+                    <input type="submit" value="Xác nhận đơn hàng" class="btn btn-success" />
+                </td>
+            </tr>
+        }
+    </table>
+
+}

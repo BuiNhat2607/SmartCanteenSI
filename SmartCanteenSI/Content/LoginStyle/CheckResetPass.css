@@ -1,0 +1,35 @@
+﻿body {
+}
+.modal-body #ResetPassMessage {
+    display: none;
+    background: #f1f1f1;
+    color: #000;
+    position: relative;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+    .modal-body #ResetPassMessage p {
+        padding: 0px 20px;
+        font-size: 18px;
+    }
+.modal-body #ResetPassMessage .valid {
+        color: green;
+    }
+
+    .modal-body #ResetPassMessage .valid:before {
+        position: relative;
+        left: -35px;
+        content: "\2713";
+    }
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.modal-body #ResetPassMessage .invalid {
+        color: red;
+    }
+
+    .modal-body #ResetPassMessage .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "\2718";
+    }

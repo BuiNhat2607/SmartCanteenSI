@@ -1,0 +1,90 @@
+﻿@model PagedList.IPagedList<SmartCanteenSI.Models.Data.Dish>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "FoodMenu";
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+    <script src="~/Scripts/jquery-3.6.3.min.js"></script>
+    <link href="~/Content/MenuStyle/MenuStyle.css" rel="stylesheet" />
+}
+<style type="text/css">
+#mau-nut a {
+    clear: both;
+    background-color: orange;
+    color: snow;
+}
+
+#mau-nut a:hover {
+    background-color: darkcyan;
+    color: snow;
+}
+</style>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <span>@item.DishName</span>
+                </div>
+                <div class="panel-body">
+                    <div class="dish-info">
+                        <p><strong>Giá: </strong>@item.Price</p>
+                        <p><strong>Còn lại: </strong>@item.InStock</p>
+                        <p><strong>Phục vụ: </strong>@item.Type</p>
+                    </div>
+                    <p><img src="@item.Image" alt="food_thumbnail"></p>
+                </div>
+                <div class="panel-footer clearfix">
+                    <div class="pull-right">
+                        <div class="DatMua">
+                            <a class="btn btn-success" href="@Url.Action("ThemGioHang", "Cart",new { @id = item.DishID, @strURL = Request.Url.ToString() })" onclick="AddToCart()">Đặt mua</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    <div>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) /
+        @Model.PageCount
+    </div>
+    <div class="MenuTrang">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new
+        {
+            page = page
+        }))
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var maxLength = 100; ``
+        $(".show-read-more").each(function () {
+            var myStr = $(this).text();
+            if ($.trim(myStr).length > maxLength) {
+                var newStr = myStr.substring(0, maxLength);
+                var removedStr = myStr.substring(maxLength, $.trim(myStr).length);
+                $(this).empty().html(newStr);
+                $(this).append(' <a href="javascript:void(0);" class="readmore">đọc tiếp...</a>');
+                $(this).append('<span class="more-text">' + removedStr +
+                    '</span>');
+            }
+        });
+        $(".read-more").click(function () {
+            $(this).siblings(".more-text").contents().unwrap();
+            $(this).remove();
+        });
+    });
+</script>
+<script>
+    function AddToCart() {
+        if (Session["Account"] == null) {
+            alert("Vui lòng đăng nhập để tiếp tục!!");
+            return false;
+        }
+    }
+</script>
